@@ -1,3 +1,12 @@
+/* 
+font-family: 'Indie Flower', cursive;
+font-family: 'Playfair Display', serif; */
+
+body {
+    font-family: 'Indie Flower', cursive;
+
+}
+
 /* The side navigation menu */
 .sidenav {
     height: 100%;
