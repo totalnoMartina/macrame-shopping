@@ -3,7 +3,20 @@ font-family: 'Indie Flower', cursive;
 font-family: 'Playfair Display', serif; */
 
 body {
+    background-color: rgb(239, 147, 113);
     font-family: 'Indie Flower', cursive;
+}
+
+.navbar-brand {
+    color: rgb(79, 53, 31);
+}
+
+.navbar-brand:hover {
+    color: #f1f1f1;
+}
+
+.shop-now-button:hover {
+    background-color: rgb(240, 170, 158);
 
 }
 
