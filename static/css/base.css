@@ -2,6 +2,10 @@
 font-family: 'Indie Flower', cursive;
 font-family: 'Playfair Display', serif; */
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     background-color: #e09f63;
     background-image: url('/static/images/frontimg.png');
@@ -21,6 +25,14 @@ body {
 
 .navbar-brand:hover {
     color: #180c0c;
+}
+
+.float-end a {
+    color: rgb(241, 214, 80);
+}
+
+.float-end a:hover {
+    color: #f4eae0;
 }
 
 .shop-now-button:hover {
