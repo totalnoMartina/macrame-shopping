@@ -37,16 +37,14 @@
 </head>
 
 <body>
-    <div class="row">
-        <div class="col">
-
-        </div>
+    <div class="row logo-bckgr">
+        <div class="col"></div>
         <!-- Use any element to open the sidenav -->
 
-        <div class="col">
-            <a class="navbar-brand p-3 rounded bg-transparent" href="{% url 'home' %}">
+        <div class="col ">
+            <a class="navbar-brand p-3 rounded" href="{% url 'home' %}">
                 <h1 class="logo">
-                    <img src="/static/images/moon-cacti-from-etsy.avif" style="height: 6rem; width: 6rem;" class="rounded-circle" alt="logo of creator">
+                    <img src="/static/images/moon-cacti-from-etsy.avif" class="rounded-circle img-fluid w-25 h-25" alt="logo of creator">
                     Black Moon Designs
                 </h1>
             </a>
@@ -60,8 +58,31 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="#">About Black Moon Designs</a>
             <a href="#">Macrame Products</a>
+
+            {% if request.user.is_authenticated %}
+            {% if request.user.is_superuser %}
+            <a href="{% url 'admin:index' %}">Management</a>
+            {% endif %}
             <a href="#">My Account</a>
-            <a href="#">Contact</a>
+            <span> <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-item mt-3" href="#">
+                    <div class="text-right m-3">
+                        <div><i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <p class="my-0 bag-total">
+                            {% if grand_total %}
+                            €{{ grand_total|floatformat:2 }}
+                            {% else %}
+                            €0.00
+                            {% endif %}
+                        </p>
+                    </div>
+                </a></span>
+            <a href="{% url 'account_logout' %}" class="rounded-left p-1">Logout</a>
+            {% else %}
+            <a href="{% url 'account_signup' %}" class="rounded-left p-1">Register</a>
+            <a href="{% url 'account_login' %}" class="rounded-left p-1">Login</a>
+            {% endif %}
+
         </div>
         <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
         <div id="main">
@@ -69,8 +90,23 @@
         </div>
 
     </header>
+    <br>
     {% if messages %}
-    <div class="message-container"></div>
+    <div class="message-container">
+        {% for message in messages %}
+        {% with message.level as level %}
+        {% if level == 40 %}
+        {% include 'includes/toasts/toast_error.html' %}
+        {% elif level == 30 %}
+        {% include 'includes/toasts/toast_warning.html' %}
+        {% elif level == 25 %}
+        {% include 'includes/toasts/toast_success.html' %}
+        {% else %}
+        {% include 'includes/toasts/toast_info.html' %}
+        {% endif %}
+        {% endwith %}
+        {% endfor %}
+    </div>
     {% endif %}
 
     {% block page_header %}
