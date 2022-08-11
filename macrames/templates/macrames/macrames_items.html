@@ -31,7 +31,7 @@
                     <div class="card h-50 border-0">
                         {% if macram.image %}
                         <a href="{% url 'macrame-detail' macram.id %}">
-                            <img class="card-img-top img-fluid card__img" src="{{ macram.image.url }}" alt="{{ macram.name }}">
+                            <img class="card-img-top img-fluid" src="{{ macram.image.url }}" alt="{{ macram.name }}">
                         </a>
                         {% else %}
                         <a href="{% url 'macrame-detail' macram.id %}">

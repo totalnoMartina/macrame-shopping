@@ -14,6 +14,17 @@ body {
 
 }
 
+.detail__btn {
+    background-color: rgba(176, 93, 16, 0.854);
+    color: #f1f1f1;
+}
+
+
+.detail__btn:hover {
+    background-color: #d8b798;
+    color: rgb(31, 15, 15);
+}
+
 .logo-bckgr {
     background-image: url('/static/images/frontimg.png');
     background-repeat: no-repeat;

@@ -28,7 +28,7 @@
         </div>
         <div class="col-12 col-md-6 col-lg-4 pb-4">
             <div class="product-details-container rounded mt-md-5 p-2 mt-1">
-                <p class="mb-0">{{ macrame.name }}</p>
+                <p class="mb-0 fs-1">{{ macrame.name }}</p>
                 <p class="lead mb-0 text-left font-weight-bold">€{{ macrame.price }}</p>
                 {% if macrame.rating %}
                 <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ macrame.rating }} / 5</small>
@@ -43,7 +43,7 @@
                         {% if s %}
                         <div class="col-12">
                             <p><strong>Size:</strong></p>
-                            <select class="form-control rounded-0 w-50" name="product_size" id='id_macrame_size'>
+                            <select class="form-control rounded-0 w-50" name="macrame_size" id='id_macrame_size'>
                                 <option value="xs">XS</option>
                                 <option value="s">S</option>
                                 <option value="m" selected>M</option>
@@ -79,9 +79,9 @@
                                 <span class="icon">
                                     <i class="fas fa-chevron-left"></i>
                                 </span>
-                                <span class="p-1">Keep Shopping</span>
+                                <span class="p-1 fs-4 detail__btn rounded mt-1 pb-2">Keep Shopping</span>
                             </a>
-                            <input type="submit" class="btn btn-black rounded mt-5" value="Add to Bag">
+                            <input type="submit" class="btn detail__btn rounded align-bottom p-1 fs-4" value="Add to Cart">
                         </div>
                         <input type="hidden" name="redirect_url" value="{{ request.path }}">
                     </div>
