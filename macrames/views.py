@@ -59,10 +59,10 @@ def all_macrames(request):
 
     return render(request, 'macrames/macrames_items.html', context)
 
-def macrame_detail(request, macrame_id):
+def macrame_detail(request, item_id):
     """ A view to show individual macrame details """
 
-    macrame = get_object_or_404(Macrame, pk=macrame_id)
+    macrame = get_object_or_404(Macrame, pk=item_id)
 
     context = {
         'macrame': macrame,

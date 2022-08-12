@@ -31,11 +31,11 @@
                     <div class="card h-50 border-0">
                         {% if macram.image %}
                         <a href="{% url 'macrame-detail' macram.id %}">
-                            <img class="card-img-top img-fluid" src="{{ macram.image.url }}" alt="{{ macram.name }}">
+                            <img class="card-img-top img-fluid img__detail" src="{{ macram.image.url }}" alt="{{ macram.name }}">
                         </a>
                         {% else %}
                         <a href="{% url 'macrame-detail' macram.id %}">
-                            <img class="card-img-top img-fluid" src="/static/images/noimage.png" alt="{{ macram.name }}">
+                            <img class="card-img-top img-fluid img__detail" src="/static/images/noimage.png" alt="{{ macram.name }}">
                         </a>
                         {% endif %}
                         <div class="card-body pb-0">
@@ -63,6 +63,7 @@
                 {% endif %}
                 {% if forloop.counter|divisibleby:2 %}
                 <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
+
                     <hr>
                 </div>
                 {% endif %}

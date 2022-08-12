@@ -17,11 +17,11 @@
             <div class="image-container my-5">
                 {% if macrame.image %}
                 <a href="{{ macrame.image.url }}" target="_blank">
-                    <img class="card-img-top img-fluid rounded" src="{{ macrame.image.url }}" alt="{{ macrame.name }}">
+                    <img class="card-img-top img-fluid rounded img__detail" src="{{ macrame.image.url }}" alt="{{ macrame.name }}">
                 </a>
                 {% else %}
                 <a href="#">
-                    <img class="card-img-top img-fluid rounded " src="/static/images/noimage.png" alt="{{ macrame.name }}">
+                    <img class="card-img-top img-fluid rounded img__detail" src="/static/images/noimage.png" alt="{{ macrame.name }}">
                 </a>
                 {% endif %}
             </div>

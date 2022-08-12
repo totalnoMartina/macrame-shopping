@@ -81,9 +81,11 @@
             <a href="{% url 'admin:index' %}">Management</a>
             {% endif %}
             <a href="#">My Account</a>
-            <span> <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-item mt-3" href="#">
+
+            <span>
+                <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-item mt-3" href="{% url 'view_shoppingcart' %}">
                     <div class="text-right m-3">
-                        <div><i class="fas fa-shopping-bag"></i>
+                        <div>Shopping Cart</i>
                         </div>
                         <p class="my-0 bag-total">
                             {% if grand_total %}
@@ -126,6 +128,8 @@
     </div>
     {% endif %}
 
+
+
     {% block page_header %}
     {% endblock %}
 
@@ -133,6 +137,53 @@
     {% endblock %}
 
     {% block postloadjs %}
+
+    <script type="text/javascript">
+        $('.toast').toast('show');
+
+
+        // Disable +/- buttons outside 1-99 range
+        function handleEnableDisable(itemId) {
+            var currentValue = parseInt($(`#id_qty_${itemId}`).val());
+            var minusDisabled = currentValue < 2;
+            var plusDisabled = currentValue > 98;
+            $(`#decrement-qty_${itemId}`).prop('disabled', minusDisabled);
+            $(`#increment-qty_${itemId}`).prop('disabled', plusDisabled);
+        }
+
+        // Ensure proper enabling/disabling of all inputs on page load
+        var allQtyInputs = $('.qty_input');
+        for (var i = 0; i < allQtyInputs.length; i++) {
+            var itemId = $(allQtyInputs[i]).data('item_id');
+            handleEnableDisable(itemId);
+        }
+
+        // Check enable/disable every time the input is changed
+        $('.qty_input').change(function() {
+            var itemId = $(this).data('item_id');
+            handleEnableDisable(itemId);
+        });
+
+        // Increment quantity
+        $('.increment-qty').click(function(e) {
+            e.preventDefault();
+            var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
+            var currentValue = parseInt($(closestInput).val());
+            $(closestInput).val(currentValue + 1);
+            var itemId = $(this).data('item_id');
+            handleEnableDisable(itemId);
+        });
+
+        // Decrement quantity
+        $('.decrement-qty').click(function(e) {
+            e.preventDefault();
+            var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
+            var currentValue = parseInt($(closestInput).val());
+            $(closestInput).val(currentValue - 1);
+            var itemId = $(this).data('item_id');
+            handleEnableDisable(itemId);
+        });
+    </script>
     {% endblock %}
 
 

@@ -14,6 +14,11 @@ body {
 
 }
 
+.img__detail:hover {
+    background-color: #6b6464;
+    opacity: 0.6;
+}
+
 .detail__btn {
     background-color: rgba(176, 93, 16, 0.854);
     color: #f1f1f1;
