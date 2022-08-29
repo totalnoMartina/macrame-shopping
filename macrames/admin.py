@@ -8,6 +8,7 @@ class MacrameAdmin(admin.ModelAdmin):
         'category',
         'price',
         'image',
+        'size',
     )
 
     ordering = ('-price',)

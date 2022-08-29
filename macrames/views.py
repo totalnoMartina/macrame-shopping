@@ -1,8 +1,11 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponseRedirect
 from django.contrib import messages
 from django.db.models import Q
+from django.views.generic import View
 from django.db.models.functions import Lower
 from .models import Macrame, Category
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 def index(request):
@@ -59,6 +62,7 @@ def all_macrames(request):
 
     return render(request, 'macrames/macrames_items.html', context)
 
+
 def macrame_detail(request, item_id):
     """ A view to show individual macrame details """
 
@@ -69,4 +73,22 @@ def macrame_detail(request, item_id):
     }
 
     return render(request, 'macrames/macrame-detail.html', context)
+
+
+class MacrameLike(LoginRequiredMixin, View):
     
+    def post(self, request, pk, *args, **kwargs):
+        macrame_ = Macrame.objects.get(pk=pk)
+        is_like = False
+        for like in macrame_.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+        if not is_like:
+            macrame_.likes.add(request.user)
+        if is_like:
+            macrame_.likes.remove(request.user)
+            
+        next_ = request.POST.get('next_', '/')
+        return HttpResponseRedirect(next_)
+

@@ -12,32 +12,18 @@ def view_shoppingcart(request):
 def add_to_shoppingcart(request, item_id):
     """ Add a quantity of the specified macrame to the  shopping cart """
 
-    macrame = Macrame.objects.get(pk=item_id)
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
-    size = None
-    if 'macrame_size' in request.POST:
-        size = request.POST['macrame_size']
     shoppingcart = request.session.get('shoppingcart', {})
 
-    if size:
-        if item_id in list(shoppingcart.keys()):
-            if size in shoppingcart[item_id]['items_by_size'].keys():
-                shoppingcart[item_id]['items_by_size'][size] += quantity
-            else:
-                shoppingcart[item_id]['items_by_size'][size] = quantity
-        else:
-            shoppingcart[item_id] = {'items_by_size': {size: quantity}}
+    if item_id in list(shoppingcart.keys()):
+        shoppingcart[item_id] += quantity
     else:
-        if item_id in list(shoppingcart.keys()):
-            shoppingcart[item_id] += quantity
-        else:
-            shoppingcart[item_id] = quantity
-            messages.success(request, f'Added {macrame.name} to your shopping cart')
+        shoppingcart[item_id] = quantity
 
     request.session['shoppingcart'] = shoppingcart
+    print(request.session['shoppingcart'])
     return redirect(redirect_url)
-
 
 def adjust_shoppingcart(request, item_id):
     """Adjust the quantity of the specified product to the specified amount"""

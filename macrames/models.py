@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import settings
 
 
 class Category(models.Model):
@@ -26,7 +27,11 @@ class Macrame(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     description = models.TextField()
+    size = models.CharField(max_length=100, null=True, blank=True)
+    has_sizes = models.BooleanField(default=False, null=True, blank=True)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='mac_likes')
 
     def __str__(self):
         """ A method to show the name of the product  """
         return self.name
+    

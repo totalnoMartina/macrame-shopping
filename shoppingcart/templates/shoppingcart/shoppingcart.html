@@ -45,7 +45,7 @@
                             <img class="img-fluid rounded" src="{{ item.macrame.image.url }}">
                         </td>
                         <td class="py-3">
-                            <p class="my-0"><strong>{{ item.macrame.name }}</strong></p>
+                            <p class="my-0"><strong>{{ item.maxrame.name }}</strong></p>
                         </td>
                         <td class="py-3">
                             <p class="my-0">€{{ item.macrame.price }}</p>
@@ -74,7 +74,7 @@
                                 </div>
                             </form>
                             <a class="update-link rounded p-1"><small>Update</small></a>
-                            <a class="remove-item float-right rounded px-1" id="remove_{{ item.item_id }}" data-macrame_size="{{ item.size }}"><small>Remove</small></a>
+                            <a class="remove-item float-right rounded px-1" id="remove_{{ item.item_id }}" data-product_size="{{ item.size }}"><small>Remove</small></a>
                         </td>
 
                         <td class="py-3 w-25">
@@ -92,13 +92,14 @@
                             <h4 class="mt-4"><strong>Grand Total: €{{ grand_total|floatformat:2 }}</strong></h4>
                             {% if free_delivery_delta > 0 %}
                             <p class="mb-1 text-danger">
+                                You could get free delivery by spending just <strong>€{{ free_delivery_delta }}</strong> more!
                             </p>
                             {% endif %}
                         </td>
                     </tr>
                     <tr>
                         <td colspan="5" class="text-right">
-                            <a href="{% url 'macrame_items' %}" class="btn btn-outline-black rounded btn-lg">
+                            <a href="{% url 'macrames' %}" class="btn btn-outline-black rounded btn-lg">
                                 <span class="icon">
                                     <i class="fas fa-chevron-left"></i>
                                 </span>
@@ -116,7 +117,7 @@
             </div>
             {% else %}
             <p class="lead mb-5">Your bag is empty.</p>
-            <a href="{% url 'macrame_items' %}" class="btn btn-outline-black rounded-0 btn-lg">
+            <a href="{% url 'all_macrames' %}" class="btn btn-outline-black rounded-0 btn-lg">
                 <span class="icon">
                     <i class="fas fa-chevron-left"></i>
                 </span>
@@ -141,9 +142,11 @@
     $('.remove-item').click(function(e) {
         var csrfToken = "{{ csrf_token }}";
         var itemId = $(this).attr('id').split('remove_')[1];
+        var size = $(this).data('macrame_size');
         var url = `/shoppingcart/remove/${itemId}/`;
         var data = {
             'csrfmiddlewaretoken': csrfToken,
+            'macrame_size': size
         };
 
         $.post(url, data)
@@ -151,48 +154,5 @@
                 location.reload();
             });
     })
-
-    // Disable +/- buttons outside 1-99 range
-    function handleEnableDisable(itemId) {
-        var currentValue = parseInt($(`#id_qty_${itemId}`).val());
-        var minusDisabled = currentValue < 2;
-        var plusDisabled = currentValue > 98;
-        $(`#decrement-qty_${itemId}`).prop('disabled', minusDisabled);
-        $(`#increment-qty_${itemId}`).prop('disabled', plusDisabled);
-    }
-
-    // Ensure proper enabling/disabling of all inputs on page load
-    var allQtyInputs = $('.qty_input');
-    for (var i = 0; i < allQtyInputs.length; i++) {
-        var itemId = $(allQtyInputs[i]).data('item_id');
-        handleEnableDisable(itemId);
-    }
-
-    // Check enable/disable every time the input is changed
-    $('.qty_input').change(function() {
-        var itemId = $(this).data('item_id');
-        handleEnableDisable(itemId);
-    });
-
-    // Increment quantity
-    $('.increment-qty').click(function(e) {
-        e.preventDefault();
-        var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
-        var currentValue = parseInt($(closestInput).val());
-        $(closestInput).val(currentValue + 1);
-        var itemId = $(this).data('item_id');
-        handleEnableDisable(itemId);
-    });
-
-    // Decrement quantity
-    $('.decrement-qty').click(function(e) {
-        e.preventDefault();
-        var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
-        var currentValue = parseInt($(closestInput).val());
-        $(closestInput).val(currentValue - 1);
-        var itemId = $(this).data('item_id');
-        handleEnableDisable(itemId);
-    });
 </script>
-
 {% endblock %}
